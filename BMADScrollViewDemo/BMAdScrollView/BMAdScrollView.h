@@ -55,8 +55,7 @@
 @property (nonatomic) CGRect titleFrame;
 @property (nonatomic,strong) UIColor *titleBackColor;
 @property (nonatomic,strong) NSTimer *timer; // Don't forget set valid when not in front 
-@property(nonatomic,strong)id<ValueClickDelegate> vDelegate;
-
+@property (nonatomic,strong)id<ValueClickDelegate> vDelegate;
 /**
  *  @method initWithNameArr: titleArr: height:
  *

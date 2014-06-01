@@ -135,7 +135,7 @@ static  int pageNumber;//页码
 }
 //自定义实例化方法
 
-- (instancetype)initWithNameArr:(NSMutableArray *)imageArr titleArr:(NSMutableArray *)titleArr height:(float)heightValue offsetY:(CGFloat)offsetY{
+- (instancetype)initWithNameArr:(NSMutableArray *)imageArr titleArr:(NSMutableArray *)titleArr height:(float)heightValue offsetY:(CGFloat)offsetY {
     
     self = [super initWithFrame:CGRectMake(0, offsetY, WIDTH, heightValue)];
     
@@ -148,12 +148,9 @@ static  int pageNumber;//页码
         [self addADScrollView:imageArr.count height:heightValue];
         [self addImages:imageArr titles:titleArr];
         [self addPageControl:imageArr.count];
-        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
- 
-        [dict setObject:@"YES" forKey:@"isAuto"];
         
       //设置NSTimer
-        _timer = [NSTimer scheduledTimerWithTimeInterval:INTERVALE target:self selector:@selector(changeView:) userInfo:dict repeats:YES];
+        _timer = [NSTimer scheduledTimerWithTimeInterval:INTERVALE target:self selector:@selector(runTimePage) userInfo:nil repeats:YES];
         
     }
     return self;
@@ -171,7 +168,7 @@ static  int pageNumber;//页码
     imageSV.showsVerticalScrollIndicator = NO;//不显示垂直滚动条
     imageSV.showsHorizontalScrollIndicator = NO;//不显示水平滚动条
     
-    CGSize newSize = CGSizeMake(WIDTH * count,  imageSV.bounds.size.height);//设置scrollview的大小
+    CGSize newSize = CGSizeMake(WIDTH * (count + 2),  imageSV.bounds.size.height);//设置scrollview的大小
     [imageSV setContentSize:newSize];
     [self addSubview:imageSV];
 
@@ -179,13 +176,42 @@ static  int pageNumber;//页码
 - (void)addImages:(NSArray *)imageArr titles:(NSArray *)titleArr
 {
     //添加图片视图
-    for (int i = 0; i < imageArr.count; i++) {
+//    for (int i = 0; i < imageArr.count && !isRepeat; i++) {
+//        
+//        NSString *title = @"";
+//        NSString *imageURL = @"";
+//        if (i < titleStrArr.count) {
+//            title = titleArr[i];
+//            imageURL = imageArr[i];
+//        }
+//
+//        //创建内容对象
+//        CGRect titleRect = CGRectMake(0, 150, 320, 30);
+//        BMImageView *imageView =  [[BMImageView alloc]initWithImageName:imageURL title:title x:WIDTH*i tFrame:titleRect iHeight:imageSV.frame.size.height titleHidden:NO];
+//        
+//        //制定AOView委托
+//        imageView.uBdelegate = self;
+//        //设置视图标示
+//        imageView.tag = i;
+//        //添加视图
+//        [imageSV addSubview:imageView];
+//    }
+//
+    for (int i = 0; i <= imageArr.count +1; i++) {
         
         NSString *title = @"";
         NSString *imageURL = @"";
-        if (i < titleStrArr.count) {
-            title = titleArr[i];
-            imageURL = imageArr[i];
+        if (i != titleStrArr.count +1 && i != 0) {
+            title = titleArr[i - 1];
+            imageURL = imageArr[i - 1];
+        }
+        if (i == 0) {
+            title = titleArr[titleArr.count - 1];
+            imageURL = imageArr[imageArr.count - 1];
+        }else if(i == titleArr.count +1)
+        {
+            title = titleArr[0];
+            imageURL = imageArr[0];
         }
         //创建内容对象
         CGRect titleRect = CGRectMake(0, 150, 320, 30);
@@ -198,6 +224,8 @@ static  int pageNumber;//页码
         //添加视图
         [imageSV addSubview:imageView];
     }
+    [imageSV setContentOffset:CGPointMake(0, 0)];
+    [imageSV scrollRectToVisible:CGRectMake(WIDTH,0,WIDTH,self.frame.size.height) animated:NO]; // 默认从序号1位置放第1页 ，序号0位置位置放第4页
 
 }
 - (void)addPageControl:(NSInteger)count
@@ -217,36 +245,43 @@ static  int pageNumber;//页码
     
 }
 //NSTimer方法
--(void)changeView:(NSTimer *)timer
-{
-    NSLog(@"changeView");
-    NSString *isAutoYES = [[timer userInfo] objectForKey:@"isAuto"];
-    BOOL isAuto = [isAutoYES isEqualToString:@"YES"];
-    //修改页码
-    if (pageNumber == 0 && isAuto) {
-        switchDirection = rightDirection;
-    }else if(pageNumber >= imageNameArr.count-1 && isAuto){
-        switchDirection = zeroDirection;
-    }
-    
-    if (switchDirection == rightDirection && isAuto) {
-        pageNumber ++;
-    }else if (switchDirection == zeroDirection && isAuto){
-        pageNumber = 1;
-    }
-    
-    //page++;
-    //    //判断是否大于上线
-    //    if (page==imageNameArr.count) {
-    //        //重置页码
-    //        page=0;
-    //    }
-    //设置滚动到第几页
-    [imageSV setContentOffset:CGPointMake(WIDTH*pageNumber, 0) animated:YES];
-    pageControl.currentPage = pageNumber;
-    
-    
-}
+//-(void)changeView:(NSTimer *)timer
+//{
+//    NSLog(@"changeView");
+//
+//    BOOL isAuto = timer != nil;
+//    if (pageNumber == imageNameArr.count) {
+//        [imageSV setContentOffset:CGPointMake(WIDTH*pageNumber, 0) animated:YES];
+//        pageNumber = 0;
+//        [imageSV setContentOffset:CGPointMake(WIDTH*pageNumber, 0) animated:YES];
+//        pageControl.currentPage = pageNumber;
+//        return ;
+//    }
+//    //修改页码
+//    if (pageNumber == 0 && isAuto) {
+//        switchDirection = rightDirection;
+//    }else if(pageNumber >= imageNameArr.count-1 && isAuto){
+//        switchDirection = zeroDirection;
+//    }
+//    
+//    if (switchDirection == rightDirection && isAuto) {
+//        pageNumber ++;
+//    }else if (switchDirection == zeroDirection && isAuto){
+//        pageNumber = 0;
+//    }
+//    
+//    //page++;
+//    //    //判断是否大于上线
+//    //    if (page==imageNameArr.count) {
+//    //        //重置页码
+//    //        page=0;
+//    //    }
+//    //设置滚动到第几页
+//    [imageSV setContentOffset:CGPointMake(WIDTH*pageNumber, 0) animated:YES];
+//    pageControl.currentPage = pageNumber;
+//    
+//    
+//}
 
 - (void)setPageCenter:(CGPoint)pageCenter
 {
@@ -260,16 +295,54 @@ static  int pageNumber;//页码
 //}
 
     // called when scroll view grinds to a halt
+//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+//{
+//    NSLog(@"scrollViewDidEndDecelerating");
+//    CGPoint offset = scrollView.contentOffset;
+//    pageNumber = (offset.x  + WIDTH * 0.5)/ WIDTH; // 0 1 2
+//    NSLog(@"%f  %d",offset.x,pageNumber);
+//    [self changeView:nil];
+//
+//}
+// scrollview 委托函数
+- (void)scrollViewDidScroll:(UIScrollView *)sender
+{
+    CGFloat pagewidth = imageSV.frame.size.width;
+    int page = floor((imageSV.contentOffset.x - pagewidth/([imageNameArr count]+2))/pagewidth)+1;
+    page --;  // 默认从第二页开始
+    pageControl.currentPage = page;
+}
+// scrollview 委托函数
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    NSLog(@"scrollViewDidEndDecelerating");
-    CGPoint offset = scrollView.contentOffset;
-    pageNumber = (offset.x  + WIDTH * 0.5)/ WIDTH; // 0 1 2
-    NSLog(@"%f  %d",offset.x,pageNumber);
-    [self changeView:_timer];
-
+    CGFloat pagewidth = imageSV.frame.size.width;
+    int currentPage = floor((imageSV.contentOffset.x - pagewidth/ ([imageNameArr count]+2)) / pagewidth) + 1;
+    //    int currentPage_ = (int)self.scrollView.contentOffset.x/320; // 和上面两行效果一样
+    //    NSLog(@"currentPage_==%d",currentPage_);
+    if (currentPage==0)
+    {
+        [imageSV scrollRectToVisible:CGRectMake(WIDTH * [imageNameArr count],0,WIDTH,HEIGHT) animated:NO]; // 序号0 最后1页
+    }
+    else if (currentPage==([imageNameArr count]+1))
+    {
+        [imageSV scrollRectToVisible:CGRectMake(WIDTH,0,WIDTH,HEIGHT) animated:NO]; // 最后+1,循环第1页
+    }
 }
-
+// pagecontrol 选择器的方法
+- (void)turnPage
+{
+    int page = pageControl.currentPage; // 获取当前的page
+    [imageSV scrollRectToVisible:CGRectMake(WIDTH*(page+1),0,WIDTH,HEIGHT) animated:NO]; // 触摸pagecontroller那个点点 往后翻一页 +1
+}
+// 定时器 绑定的方法
+- (void)runTimePage
+{
+    int page = pageControl.currentPage; // 获取当前的page
+    page++;
+    page = page > imageNameArr.count-1 ? 0 : page ;
+    pageControl.currentPage = page;
+    [self turnPage];
+}
 
 /*
  // Only override drawRect: if you perform custom drawing.
