@@ -20,3 +20,8 @@ Usage
     adView.pageCenter = CGPointMake(280, 165);
     [self.view addSubview:adView];
     
+大图预览：
+
+ ![image](https://raw.githubusercontent.com/skyming/BMAdScrollView/master/BMADScrollViewDemo/BMAdsView1.png)
+  ![image](https://raw.githubusercontent.com/skyming/BMAdScrollView/master/BMADScrollViewDemo/BMAdsView2.png)
+ ![image](https://raw.githubusercontent.com/skyming/BMAdScrollView/master/BMADScrollViewDemo/BMAdsView3.png)
