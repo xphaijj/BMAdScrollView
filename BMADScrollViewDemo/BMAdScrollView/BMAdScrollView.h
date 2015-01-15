@@ -16,7 +16,7 @@
  */
 // 按钮点击协议
 @protocol UrLImageButtonDelegate <NSObject>
-- (void)click:(int)vid;
+- (void)click:(NSInteger)vid;
 @end
 
 @interface BMImageView : UIView
@@ -46,7 +46,7 @@
 
 //点击scrollView中的图片点击事件协议
 @protocol ValueClickDelegate <NSObject>
--(void)buttonClick:(int)vid;
+-(void)buttonClick:(NSInteger)vid;
 @end
 
 @interface BMAdScrollView : UIView

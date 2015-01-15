@@ -331,13 +331,13 @@ static  int pageNumber;//页码
 // pagecontrol 选择器的方法
 - (void)turnPage
 {
-    int page = pageControl.currentPage; // 获取当前的page
+    NSInteger page = pageControl.currentPage; // 获取当前的page
     [imageSV scrollRectToVisible:CGRectMake(WIDTH*(page+1),0,WIDTH,HEIGHT) animated:NO]; // 触摸pagecontroller那个点点 往后翻一页 +1
 }
 // 定时器 绑定的方法
 - (void)runTimePage
 {
-    int page = pageControl.currentPage; // 获取当前的page
+    NSInteger page = pageControl.currentPage; // 获取当前的page
     page++;
     page = page > imageNameArr.count-1 ? 0 : page ;
     pageControl.currentPage = page;
@@ -353,7 +353,7 @@ static  int pageNumber;//页码
  }
  */
 #pragma UBdelegate
--(void)click:(int)vid{
+-(void)click:(NSInteger)vid{
     //调用委托实现方法
     [self.vDelegate buttonClick:vid];
 }

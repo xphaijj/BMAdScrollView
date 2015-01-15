@@ -37,7 +37,8 @@
 {
     return ;
 }
-- (void)buttonClick:(int)vid
+
+- (void)buttonClick:(NSInteger)vid
 {
     NSLog(@"Click--OK");
 }
