@@ -11,15 +11,20 @@ Pod::Spec.new do |s|
   # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
   s.name         = "BMAdScrollView"
-  s.version      = "1.1.0"
+  s.version      = "3.0"
   s.summary      = "简单,易用,可自定义的广告栏，焦点图" 
   s.homepage     = "https://github.com/skyming/BMAdScrollView"
-  s.license      = 'MIT'
+  s.license = {
+    :type => 'MIT',
+    :text => <<-LICENSE
+      Copyright 2014 skyming. All rights reserved.
+    LICENSE
+  }
   
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
   s.author             = { "skyming" => "tskyming@163.com" }
-  s.social_media_url   = "http://twitter.com/skyming3"
+  s.social_media_url   = "http://weibo.com/skymingst"
 
   
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -31,7 +36,7 @@ Pod::Spec.new do |s|
   
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
  
-  s.source       = { :git => "https://github.com/skyming/BMAdScrollView.git", :tag => "1.0.1" }
+  s.source       = { :git => "https://github.com/skyming/BMAdScrollView.git", :tag => "3.0" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
