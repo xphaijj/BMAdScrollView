@@ -11,31 +11,31 @@
 @interface BMButton : UIButton
 
 @end
+
 /**
- *  @Class  BMImageView
+ *  @Class  BMBannerView
  */
-// 按钮点击协议
-@protocol UrLImageButtonDelegate <NSObject>
-- (void)click:(NSInteger)vid;
+
+// 广告位点击事件协议
+@protocol BannerClickEventDelegate <NSObject>
+- (void)bannerClickAt:(NSInteger)idx;
 @end
 
-@interface BMImageView : UIView
-//按钮点击委托对象
-@property(nonatomic,strong)id<UrLImageButtonDelegate> uBdelegate;
+@interface BMBannerView : UIView
+
+@property(nonatomic, getter=isTitleHidden) BOOL titleHidden; // 是否隐藏标题
+@property(nonatomic, weak)id<BannerClickEventDelegate> delegate;
 
 /**
  *  @method initWithImageName: title: x: tFrame: iHeight: titleHidden:
  *
- *  @param imageName    图片url字符串
- *  @param titleStr           标题
- *  @param xPoint            图片横坐标
- *  @param titleFrame      自定义标题Frame
- *  @param imageHeight   视图高度
+ *  @param imageURL        图片URL
+ *  @param title           标题文字
  *  @param isTitleHidden  标题是否隐藏
  *
  *  @discussion  当标题隐藏时注意pageControl 位置的调整(titleFrame)
  */
--(instancetype)initWithImageName:(NSString *)imageName title:(NSString *)titleStr x:(CGFloat)xPoint tFrame:(CGRect)titleFrame iHeight:(CGFloat)imageHeight titleHidden:(BOOL) isTitleHidden;
+-(instancetype)initWithFrame:(CGRect)frame ImageName:(NSString *)imageURL title:(NSString *)title;
 @end
 
 
@@ -44,28 +44,32 @@
  *  @Class  BMAdScrollView
  */
 
-//点击scrollView中的图片点击事件协议
-@protocol ValueClickDelegate <NSObject>
--(void)buttonClick:(NSInteger)vid;
+// 点击中的图片点击事件协议
+@protocol ImageClickEventDelegate <NSObject>
+-(void)imageClickAt:(NSInteger)vid;
 @end
 
 @interface BMAdScrollView : UIView
 
-@property (nonatomic) CGPoint pageCenter; // pageControl 中心点
-@property (nonatomic) CGRect titleFrame;
-@property (nonatomic,strong) UIColor *titleBackColor;
-@property (nonatomic,strong) NSTimer *timer; // Don't forget set valid when not in front 
-@property (nonatomic,strong)id<ValueClickDelegate> vDelegate;
+@property (nonatomic, strong) NSArray *images;          // 图片
+@property (nonatomic, strong) NSArray *titles;          // 文字
+
+@property (nonatomic) CGFloat height;                   // 广告栏高度
+@property (nonatomic) CGFloat offsetY;                  // 广告栏偏移量
+@property (nonatomic) CGPoint pageCenter;               // 分页中心点
+
+@property (nonatomic, strong) UIColor *titleColor;       // 文字标题颜色
+@property (nonatomic, strong) NSTimer *timer;            // 不要忘记 Valid
+@property (nonatomic, weak)   id<ImageClickEventDelegate> delegate;
+
 /**
  *  @method initWithNameArr: titleArr: height:
  *
  *  @param imageArr       图片数组
- *  @param titleArr          标题数组
- *  @param heightValue   视图高度
- *  @param offsetY           高度偏移量
+ *  @param titleArr       标题数组
  *
  *  @discussion     默认首页为零，当视图出现或消失时，注意对timer的处理
  */
-- (instancetype)initWithNameArr:(NSMutableArray *)imageArr titleArr:(NSMutableArray *)titleArr height:(float)heightValue offsetY:(CGFloat )offsetY;
+- (instancetype)initWithFrame:(CGRect)frame images:(NSMutableArray *)imageURLs titles:(NSMutableArray *)titles;
 
 @end

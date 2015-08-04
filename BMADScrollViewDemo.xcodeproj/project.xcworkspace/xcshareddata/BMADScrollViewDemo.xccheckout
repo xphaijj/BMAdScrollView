@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>886244AB-4C16-4778-AC5D-23256DAE5054</string>
 	<key>IDESourceControlProjectName</key>
-	<string>BMADScrollViewDemo</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>658984223225210651EC78E2C4B3EFBC972476FC</key>
 		<string>github.com:skyming/BMAdScrollView.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>BMADScrollViewDemo.xcodeproj</string>
+	<string>BMADScrollViewDemo.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>658984223225210651EC78E2C4B3EFBC972476FC</key>

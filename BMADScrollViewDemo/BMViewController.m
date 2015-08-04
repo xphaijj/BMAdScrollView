@@ -10,7 +10,7 @@
 #import "BMDefineUtils.h"
 #import "BMAdScrollView.h"
 
-@interface BMViewController ()<ValueClickDelegate>
+@interface BMViewController ()<ImageClickEventDelegate>
 
 @end
 
@@ -26,11 +26,10 @@
     
     LOGRECT(self.view.frame);
     
-    BMAdScrollView *adView = [[BMAdScrollView alloc] initWithNameArr:arr  titleArr:strArr height:180.0f offsetY:100];
-    adView.vDelegate = self;
-    adView.pageCenter = CGPointMake(280, 165);
+    BMAdScrollView *adView = [[BMAdScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, 180) images:arr titles:strArr];
+    adView.delegate = self;
+    adView.pageCenter = CGPointMake(kScreen_Width - 30, 165);
     [self.view addSubview:adView];
-    
 
 }
 -(void)serdsfd
@@ -38,10 +37,12 @@
     return ;
 }
 
-- (void)buttonClick:(NSInteger)vid
+
+- (void)imageClickAt:(NSInteger)vid
 {
     NSLog(@"Click--OK");
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
