@@ -203,6 +203,7 @@
 				84B99F59193A67AC00BE2315 /* Sources */,
 				84B99F5A193A67AC00BE2315 /* Frameworks */,
 				84B99F5B193A67AC00BE2315 /* Resources */,
+				2E6F23B21B982C2300619E14 /* BuildVersion */,
 			);
 			buildRules = (
 			);
@@ -291,6 +292,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2E6F23B21B982C2300619E14 /* BuildVersion */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = BuildVersion;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "REV=`git rev-list master | wc -l | awk '{print $1}'`\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion ${REV}\" \"${TARGET_BUILD_DIR}\"/${INFOPLIST_PATH}\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		84B99F59193A67AC00BE2315 /* Sources */ = {
